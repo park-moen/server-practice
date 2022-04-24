@@ -17,23 +17,23 @@ module.exports = class User extends Sequelize.Model {
           type: Sequelize.STRING(100),
           allowNull: true,
         },
+        snsId: {
+          type: Sequelize.STRING(30),
+          allowNull: true,
+        },
         provider: {
           type: Sequelize.STRING(10),
           allowNull: false,
           defaultValue: 'local',
         },
-        snsId: {
-          type: Sequelize.STRING(30),
-          allowNull: true,
-        },
       },
       {
         sequelize,
         timestamps: true,
+        paranoid: true,
         underscored: false,
         modelName: 'User',
         tableName: 'user',
-        paranoid: true,
         charset: 'utf8',
         collate: 'utf8_general_ci',
       }
@@ -44,7 +44,7 @@ module.exports = class User extends Sequelize.Model {
     db.User.hasMany(db.Post);
     db.User.belongsToMany(db.User, {
       foreignKey: 'followingId',
-      as: 'Followers',
+      as: 'followers',
       through: 'Follow',
     });
     db.User.belongsToMany(db.User, {
